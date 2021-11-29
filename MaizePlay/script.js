@@ -14,11 +14,17 @@ var sport = 'N/A';
 var level = 'N/A';
 var id = 1;
 
+const db = firebase.firestore();
+const gamesList = $('.games_list');
+
+let gamesRef;
+let unsubscribe;
+
 // Main JQuery Function
 $(document).ready(function () {
   // display landing page, hide everything else
+  gamesRef = db.collection('All_Games');
   displayHome();
-
   // Home button
   $('#Home').click(displayHome);
 
@@ -41,6 +47,12 @@ $(document).ready(function () {
 
   // Generate game button
   $('#generate_game').click(generateGameFunc);
+
+  gamesRef.onSnapshot(querySnapshot => {
+    const games = querySnapshot.docs.map(doc => {
+      console.log(doc.data());
+    });
+  });
 })
 // End Main Jquery
 
@@ -71,6 +83,17 @@ function generateGameFunc() { // used to post the game to the list
   }
   var max = $("#t_players").val();
   var curr = $('#c_players').val();
+  var date = $('#game_date').val();
+  var time = $('#appt').val();
+  //TODO: ADD LOCATION
+  gamesRef.add({
+    sport: sport,
+    date: date,
+    time: time,
+    numPlayers: curr,
+    totPlayers: max,
+    level: level
+  });
   var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
   $('.games_list').append(new_game_str);
   id++;
@@ -114,3 +137,4 @@ function findGames() {
     $('#selected_sport').show();
     $('#difficulty_container').show();
 }
+

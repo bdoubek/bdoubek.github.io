@@ -16,6 +16,28 @@
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
    </title>
+
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+   
+   <script type="module">
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+         apiKey: "AIzaSyDg_fNwCq4QkQcUs5O1qta0jtPY0sE7738",
+         authDomain: "eecs493-maizeplay.firebaseapp.com",
+         projectId: "eecs493-maizeplay",
+         storageBucket: "eecs493-maizeplay.appspot.com",
+         messagingSenderId: "233632626707",
+         appId: "1:233632626707:web:33d7e992a6430dfab7e7e6",
+         measurementId: "G-720ZZLXQB4",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+   </script>
+
+   <script src="script.js" defer></script>
 </head>
 <link rel="stylesheet" type="text/css" href="style.css">
 <!-- MAIZE PLAY HTML: -->
@@ -91,8 +113,6 @@
          <input type="number" id="c_players" min="1">
          <button id="generate_game">Post Game</button>
       </div>
-
-      <script src="script.js"></script>
    </div>
 </body>
 
