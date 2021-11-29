@@ -14,108 +14,44 @@ var sport = 'N/A';
 var level = 'N/A';
 var id = 1;
 
+// Main JQuery Function
 $(document).ready(function () {
-  // Hide everything that's not in the landing page
-  $('#difficulty_container').hide();
-  $('#map').hide();
-  $('.games_list').hide();
-  $('.create_game').hide();
-  $('#new_game_interface').hide();
+  // display landing page, hide everything else
+  displayHome();
 
-  // Football button click
-  $('#fball_button').click(function () {
-    $('#fball_button').css('border', 'solid');
-    $('#fball_button').css('border-width', '10px');
-    $('#bball_button').css('border', 'none');
-    $('#sccer_button').css('border', 'none');
-    $('#golf_button').css('border', 'none');
-    sport = "football";
-  })
+  // Home button
+  $('#Home').click(displayHome);
 
-  // Basketball button click
-  $('#bball_button').click(function () {
-    $('#bball_button').css('border', 'solid');
-    $('#bball_button').css('border-width', '10px');
-    $('#fball_button').css('border', 'none');
-    $('#sccer_button').css('border', 'none');
-    $('#golf_button').css('border', 'none');
-    sport = "basketball";
-  })
+  // Sports selection buttons
+  $('#football_button').click(function () {selectSport("football");})
+  $('#basketball_button').click(function () {selectSport("basketball");})
+  $('#soccer_button').click(function () {selectSport("soccer");})
+  $('#golf_button').click(function () {selectSport("golf");})
 
-  // Soccer button click
-  $('#sccer_button').click(function () {
-    $('#sccer_button').css('border', 'solid');
-    $('#sccer_button').css('border-width', '10px');
-    $('#fball_button').css('border', 'none');
-    $('#bball_button').css('border', 'none');
-    $('#golf_button').css('border', 'none');
-    sport = "soccer";
-  })
+  // Difficulty buttons
+  $('#begin').click(function () {selectDifficulty(1);})
+  $('#amateur').click(function () {selectDifficulty(2);})
+  $('#pro').click(function () {selectDifficulty(3);})
 
-  // Golf button click
-  $('#golf_button').click(function () {
-    $('#golf_button').css('border', 'solid');
-    $('#golf_button').css('border-width', '10px');
-    $('#fball_button').css('border', 'none');
-    $('#bball_button').css('border', 'none');
-    $('#sccer_button').css('border', 'none');
-    sport = "golf";
-  })
+  // Find games button
+  $('#submit').click(findGames);
 
-  // Beginner button click
-  $('#begin').click(function () {
-    level = 1;
-    selectDifficulty();
-  })
-
-  // Amateur button click
-  $('#amateur').click(function () {
-    level = 2;
-    selectDifficulty();
-  })
-
-  // Pro button click
-  $('#pro').click(function () {
-    level = 3;
-    selectDifficulty();
-  })
-
-  // Find games click
-  $('#submit').click(function () {
-    if (sport == 'N/A') {
-      return;
-    }
-    $('#button_container').hide();
-    $('.sport_options').hide();
-    if (sport == 'basketball') {
-      $('#selected_sport').html("<img id=selected src=images/basketball.jpg>");
-    }
-    else if (sport == 'football') {
-      $('#selected_sport').html("<img id=selected src=images/football.jpg>");
-    }
-    else if (sport == 'soccer') {
-      $('#selected_sport').html("<img id=selected src=images/soccer.jpg>");
-    }
-    else {
-      $('#selected_sport').html("<img id=selected src=images/golf.jpg>");
-    }
-    $('#difficulty_container').show();
-  })
-
+  // Create game button
   $('.create_game').click(createGameFunc);
 
+  // Generate game button
   $('#generate_game').click(generateGameFunc);
 })
+// End Main Jquery
 
 // Button functions
-function selectDifficulty() { // select difficulty
+function selectDifficulty(difficulty) { // select difficulty
   $('#selected_sport').hide();
-  $('#begin').hide();
-  $('#amateur').hide();
-  $('#pro').hide();
+  $('#difficulty_container').hide();
   $('#map').show();
   $(".games_list").show();
   $('.create_game').show();
+  level = difficulty;
 }
 
 function createGameFunc() { // used when the user wants to create their own game
@@ -136,4 +72,39 @@ function generateGameFunc() { // used to post the game to the list
   var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
   $('.games_list').append(new_game_str);
   id++;
+}
+
+function displayHome() {
+  $('#difficulty_container').hide();
+  $('#map').hide();
+  $('.games_list').hide();
+  $('.create_game').hide();
+  $('#new_game_interface').hide();
+  $('#Home').hide();
+  $('#selected_sport').hide();
+  $('#button_container').show();
+  $('.sport_options').show();
+}
+
+function selectSport(sport_choice) {
+  $('#football_button').css('border-color', '#FFCB05');
+  $('#basketball_button').css('border-color', '#FFCB05');
+  $('#soccer_button').css('border-color', '#FFCB05');
+  $('#golf_button').css('border-color', '#FFCB05');
+  $('#'+sport_choice+'_button').css('border-color', 'blue');
+  sport = sport_choice;
+}
+
+function findGames() {
+  if (sport == 'N/A') {
+      alert("Please select a sport before trying to find a game");
+      return;
+    }
+    $('#button_container').hide();
+    $('.sport_options').hide();
+    $('#selected_sport').html("<img id=selected src=images/" + sport + ".jpg>");
+    $('#difficulty_container').show();
+    $('#Home').show();
+    $('#selected_sport').show();
+    $('#difficulty_container').show();
 }
