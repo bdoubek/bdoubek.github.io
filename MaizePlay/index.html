@@ -21,77 +21,79 @@
 <!-- MAIZE PLAY HTML: -->
 
 <body>
-   <h1>
-      MaizePlay
-   </h1>
+   <div id='app'>
+      <h1>
+         MaizePlay
+      </h1>
 
-   <!-- Home Button -->
-   <button id="Home">Home</button>
+      <!-- Home Button -->
+      <button id="Home">Home</button>
 
-   <!-- Landing Page -->
-   <div class="sport_options">
-      <button id="basketball_button" class="sport_button">
-         <img class="img" id="basketball" src="images/basketball.jpg">
-      </button>
-      <button id="football_button" class="sport_button">
-         <img class="img" id="football" src="images/football.jpg">
-      </button>
-      <button id="soccer_button" class="sport_button">
-         <img class="img" id="soccer" src="images/soccer.jpg">
-      </button>
-      <button id="golf_button" class="sport_button">
-         <img class="img" id="golf" src="images/golf.jpg">
-      </button>
+      <!-- Landing Page -->
+      <div class="sport_options">
+         <button id="basketball_button" class="sport_button">
+            <img class="img" id="basketball" src="images/basketball.jpg">
+         </button>
+         <button id="football_button" class="sport_button">
+            <img class="img" id="football" src="images/football.jpg">
+         </button>
+         <button id="soccer_button" class="sport_button">
+            <img class="img" id="soccer" src="images/soccer.jpg">
+         </button>
+         <button id="golf_button" class="sport_button">
+            <img class="img" id="golf" src="images/golf.jpg">
+         </button>
+      </div>
+
+      <div id="button_container" class="container">
+         <button id="submit">
+            Find Games
+         </button>
+      </div>
+
+      <!-- Difficulty Select Page -->
+      <div id="selected_sport"></div>
+
+      <div id="difficulty_container">
+         <button id="begin" class="difficulty_button">
+            Casual
+         </button>
+         <button id="amateur" class="difficulty_button">
+            Intermediate
+         </button>
+         <button id="pro" class="difficulty_button">
+            Pro
+         </button>
+      </div>
+
+      <!-- Map Page (with screenshot, not actual google maps) with sample games -->
+      <div class="games_list">
+         <button class="create_game">Create New Game</button>
+         <button class="game_button" id="#001">#001: 4/20</button>
+         <button class="game_button" id="002">#002: 6/9</button>
+      </div>
+
+      <div id="map_container">
+         <img class="map_sc" id="map" src="images/map.JPG">
+      </div>
+
+      
+
+      <!-- Interface for creating new game -->
+      <div class="new_game_info" id="new_game_interface">
+         <label>Game Date: </label>
+         <input type="date" id="game_date" name="gamedate">
+         <label>Game Time: </label>
+         <input type="time" id="appt" name="appt">
+         <label>Max # Of Players: </label>
+         <input type="number" id="t_players" min="2">
+         <label>Players Joining: </label>
+         <input type="number" id="c_players" min="1">
+         <button id="generate_game">Post Game</button>
+      </div>
+
+      <script src="script.js"></script>
    </div>
-
-   <div id="button_container" class="container">
-      <button id="submit">
-         Find Games
-      </button>
-   </div>
-
-   <!-- Difficulty Select Page -->
-   <div id="selected_sport"></div>
-
-   <div id="difficulty_container">
-      <button id="begin" class="difficulty_button">
-         Casual
-      </button>
-      <button id="amateur" class="difficulty_button">
-         Intermediate
-      </button>
-      <button id="pro" class="difficulty_button">
-         Pro
-      </button>
-   </div>
-
-   <!-- Map Page (with screenshot, not actual google maps) with sample games -->
-   <div class="games_list">
-      <button class="create_game">Create New Game</button>
-      <button class="game_button" id="#001">#001: 4/20</button>
-      <button class="game_button" id="002">#002: 6/9</button>
-   </div>
-
-   <div id="map_container">
-      <img class="map_sc" id="map" src="images/map.JPG">
-   </div>
-
-   
-
-   <!-- Interface for creating new game -->
-   <div class="new_game_info" id="new_game_interface">
-      <label>Game Date: </label>
-      <input type="date" id="game_date" name="gamedate">
-      <label>Game Time: </label>
-      <input type="time" id="appt" name="appt">
-      <label>Max # Of Players: </label>
-      <input type="number" id="t_players" min="2">
-      <label>Players Joining: </label>
-      <input type="number" id="c_players" min="1">
-      <button id="generate_game">Post Game</button>
-   </div>
-
-   <script src="script.js"></script>
 </body>
 
 </html>
