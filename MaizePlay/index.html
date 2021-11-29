@@ -1,22 +1,95 @@
 <!DOCTYPE html>
 <html lang="en-US">
-   <head>
-      <title> Maize Play</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <!-- Optional theme -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
-      </title>
-   </head>
-   <link rel="stylesheet" type="text/css" href="style.css">
-   <!-- MAIZE PLAY HTML: -->
-   <body>
-     
 
+<head>
+   <title> Maize Play</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+   </title>
+</head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<!-- MAIZE PLAY HTML: -->
 
-    <script src="script.js"></script>
-   </body>
+<body>
+   <h1>
+      Maize Play
+   </h1>
+
+   <!-- Landing Page -->
+   <div class="sport_options">
+      <button id="bball_button" class="sport_button">
+         <img class="img" id="basketball" src="images/basketball.jpg">
+      </button>
+      <button id="fball_button" class="sport_button">
+         <img class="img" id="football" src="images/football.jpg">
+      </button>
+      <button id="sccer_button" class="sport_button">
+         <img class="img" id="soccer" src="images/soccer.jpg">
+      </button>
+      <button id="golf_button" class="sport_button">
+         <img class="img" id="golf" src="images/golf.jpg">
+      </button>
+   </div>
+
+   <div id="button_container" class="container">
+      <button id="submit">
+         Find Games
+      </button>
+   </div>
+
+   <!-- Difficulty Select Page -->
+   <div id="selected_sport"></div>
+
+   <div id="difficulty_container">
+      <button id="begin" class="difficulty_button">
+         Beginner
+      </button>
+      <button id="amateur" class="difficulty_button">
+         Amateur
+      </button>
+      <button id="pro" class="difficulty_button">
+         Pro
+      </button>
+   </div>
+
+   <!-- Map Page (with screenshot, not actual google maps) with sample games -->
+   <div class="games_list">
+      <button class="game_button" id="#001">#001: 4/20</button>
+      <button class="game_button" id="002">#002: 6/9</button>
+   </div>
+
+   <div id="map">
+      <img class="map_sc" id="map" src="images/map.JPG">
+   </div>
+
+   <button class="create_game">
+      Create Game
+   </button>
+
+   <!-- Interface for creating new game -->
+   <div class="new_game_info" id="new_game_interface">
+      <label>Game date: </label>
+      <input type="date" id="game_date" name="gamedate">
+      <label>Game time: </label>
+      <input type="time" id="appt" name="appt">
+      <label>Max number of players: </label>
+      <input type="number" id="t_players" min="2">
+      <label>Players joining: </label>
+      <input type="number" id="c_players" min="1">
+      <button id="generate_game">Post Game</button>
+   </div>
+
+   <script src="script.js"></script>
+</body>
+
 </html>
