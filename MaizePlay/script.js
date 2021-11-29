@@ -1,13 +1,23 @@
-// var resultView = new Vue({
-//   el: '#app',
-//   data: {
-//     artist1: './img/1.jpg',
-//     artist2: './img/2.jpg',
-//   },
-//   methods: {
+var resultView = new Vue({
+  el: '#app',
+  data: {
+    num: 0,
+  },
+  methods: {
 
-//   }
-// })
+  }
+})
+
+let map
+// initializes the map (div with id="map") to be ann arbor centered at UMICH
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 42.277, lng: -83.739 },
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+  // $('#map').show();
+}
 
 // Not sure if this applies to vue, so feel free to change all of this up
 var sport = 'N/A';
@@ -60,14 +70,14 @@ $(document).ready(function () {
 function selectDifficulty(difficulty) { // select difficulty
   $('#selected_sport').hide();
   $('#difficulty_container').hide();
-  $('#map').show();
+  $('#map_container').show();
   $(".games_list").show();
   $('.create_game').show();
   level = difficulty;
 }
 
 function createGameFunc() { // used when the user wants to create their own game
-  $('#map').hide();
+  $('#map_container').hide();
   $('.games_list').hide();
   $('.create_game').hide();
   $('#new_game_interface').show();
@@ -97,7 +107,7 @@ function generateGameFunc() { // used to post the game to the list
   var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
   $('.games_list').append(new_game_str);
   id++;
-  $('#map').show();
+  $('#map_container').show();
   $('.games_list').show();
   $('.create_game').show();
   $('#new_game_interface').hide();
@@ -105,7 +115,7 @@ function generateGameFunc() { // used to post the game to the list
 
 function displayHome() {
   $('#difficulty_container').hide();
-  $('#map').hide();
+  $('#map_container').hide();
   $('.games_list').hide();
   $('.create_game').hide();
   $('#new_game_interface').hide();

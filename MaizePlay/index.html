@@ -15,6 +15,7 @@
       crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
    </title>
 
    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -91,12 +92,13 @@
       <!-- Map Page (with screenshot, not actual google maps) with sample games -->
       <div class="games_list">
          <button class="create_game">Create New Game</button>
-         <button class="game_button" id="#001">#001: 4/20</button>
-         <button class="game_button" id="002">#002: 6/9</button>
+         <div>
+            <button class="game_button" id="#001">placeholder</button>
+         </div>
       </div>
 
       <div id="map_container">
-         <img class="map_sc" id="map" src="images/map.JPG">
+         <div id="map"></div>
       </div>
 
       
@@ -114,6 +116,9 @@
          <button id="generate_game">Post Game</button>
       </div>
    </div>
+
+   <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACBzOmCvUkVUutLit048gjvqXVrjCCmXE&callback=initMap&v=weekly&channel=2" async defer></script>
 </body>
 
 </html>
