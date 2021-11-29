@@ -62,16 +62,22 @@ function createGameFunc() { // used when the user wants to create their own game
 }
 
 function generateGameFunc() { // used to post the game to the list
+  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){
+    alert("Please fill out all required fields");
+    return;
+  } else if ($('#c_players').val() > $('#t_players').val()) {
+    alert("Please ensure the number of players joining is less than the total number of players");
+    return;
+  }
+  var max = $("#t_players").val();
+  var curr = $('#c_players').val();
+  var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
+  $('.games_list').append(new_game_str);
+  id++;
   $('#map').show();
   $('.games_list').show();
   $('.create_game').show();
   $('#new_game_interface').hide();
-  // having troule with this part, for some reason it's not getting the values
-  var max = $("#t_players").value;
-  var curr = $('#c_players').value;
-  var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
-  $('.games_list').append(new_game_str);
-  id++;
 }
 
 function displayHome() {
