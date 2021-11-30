@@ -5,6 +5,7 @@ var resultView = new Vue({
     games: [],// this is a list of OBJECTS. So game[0].date gives the date, for example.
     difficulty:0,
     sport:'',
+    indGame: '',// used to store individual game
   },
   methods: {
 
@@ -18,10 +19,10 @@ var resultView = new Vue({
       this.games = [];
       const gameData = querySnapshot.docs.map(doc => {
         if (!this.games.includes(doc.data())) {
-          this.games.push(doc.data());
-          console.log("fetching to games list")
+          var temp = doc.data();
+          temp['id'] = doc.id;
+          this.games.push(temp);
         }
-        // console.log(doc.data());
        });
       });
 
@@ -35,6 +36,30 @@ var resultView = new Vue({
 
       console.log(this.sport, this.difficulty);
       console.log(games)
+    },
+    showGameInfo(game) {
+      $('#difficulty_container').hide();
+      $('#map_container').hide();
+      $('.games_list').hide();
+      $('.create_game').hide();
+      //TODO add back button add join game button add info
+      $('#new_game_interface').hide();
+      $('#selected_sport').hide();
+      $('#button_container').hide();
+      $('.sport_options').hide();
+      this.indGame = game;
+      this.gameDocId = game.id;
+      $('#ind_game_interface').show();
+      $('#back_to_select').show();
+    },
+    joinFunc() {
+      if (this.indGame.numPlayers >= this.indGame.totPlayers) {
+        alert("Game is already full, please try another");
+        return;
+      }
+      var newnumPlayers = parseInt(this.indGame.numPlayers)+1;
+      db.collection("All_Games").doc(this.indGame.id).set({numPlayers: newnumPlayers}, {merge: true});
+      displayHome();
     },
   }
 })
@@ -56,6 +81,7 @@ var level = 'N/A';
 var id = 1;
 
 const db = firebase.firestore();
+
 const gamesList = $('.games_list');
 
 let gamesRef;// this is the object that firebase give us
@@ -90,18 +116,21 @@ $(document).ready(function () {
   // Generate game button
   $('#generate_game').click(generateGameFunc);
 
-  gamesRef.onSnapshot(querySnapshot => {
+  $('#back_to_select').click(goBackFunc);
+
+  /*gamesRef.onSnapshot(querySnapshot => {
     games = [];
     const gameData = querySnapshot.docs.map(doc => {
       if (!games.includes(doc.data())) {
-        games.push(doc.data());
-        console.log("fetching games list")
+        var temp = doc.data();
+        temp['id'] = doc.id;
+        games.push(temp);
       }
-      // console.log(doc.data());
     });
+    console.log(games);
   });
   console.log("asdklfjaskfdjs")
-  console.log(games)
+  console.log(games)*/
 })
 // End Main Jquery
 
@@ -134,7 +163,7 @@ function generateGameFunc() { // used to post the game to the list
   var curr = $('#c_players').val();
   var date = $('#game_date').val();
   var time = $('#appt').val();
-  //TODO: ADD LOCATION
+  //TODO: ADD LOCATION ADD ID TAG
   gamesRef.add({
     sport: sport,
     date: date,
@@ -151,6 +180,7 @@ function generateGameFunc() { // used to post the game to the list
   $('.games_list').show();
   $('.create_game').show();
   $('#new_game_interface').hide();
+  $('#back_to_select').hide();
 }
 
 function displayHome() {
@@ -163,6 +193,8 @@ function displayHome() {
   $('#selected_sport').hide();
   $('#button_container').show();
   $('.sport_options').show();
+  $('#ind_game_interface').hide();
+  $('#back_to_select').hide();
 }
 
 function selectSport(sport_choice) {
@@ -186,5 +218,15 @@ function findGames() {
     $('#Home').show();
     $('#selected_sport').show();
     $('#difficulty_container').show();
+    $('#ind_game_interface').hide();
+    $('#back_to_select').hide();
+}
+
+function goBackFunc() {
+  $('#ind_game_interface').hide();
+  $('#back_to_select').hide();
+  $('#map_container').show();
+  $(".games_list").show();
+  $('.create_game').show();
 }
 

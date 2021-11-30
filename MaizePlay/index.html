@@ -20,6 +20,8 @@
 
    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
    
    <script type="module">
       // Your web app's Firebase configuration
@@ -95,7 +97,7 @@
          <div v-for="game in games">
             <div v-show="game.sport==sport">
                <div v-bind:key=renderKey v-show="game.level==difficulty">
-                  <button class="game_button" id="#001">
+                  <button class="game_button" id="#001" v-on:click="showGameInfo(game)">
                      <div>{{game.date}}</div>
                      <div>{{game.numPlayers}}/{{game.totPlayers}}</div>
                   </button>
@@ -122,8 +124,20 @@
          <input type="number" id="c_players" min="1">
          <button v-on:click="updateGames" id="generate_game">Post Game</button>
       </div>
-   </div>
 
+      <!-- Individual Game Page -->
+      <button id="back_to_select">Back</button>
+      <div class="ind_game_info" id="ind_game_interface" v-if="indGame">
+         <div id="game_id"> {{ indGame.id }} </div>
+         <p><b>Location: </b> {{ indGame.location }} <br>
+            <b>Date: </b> {{ indGame.date }} <br>
+            <b>Time: </b> {{ indGame.time }} <br>
+            <b>Spots: </b> {{ indGame.numPlayers }}/{{ indGame.totPlayers }} 
+         </p>
+         <button id="join_game" v-on:click="joinFunc">Join Game</button>
+      </div>
+
+   </div>
    <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACBzOmCvUkVUutLit048gjvqXVrjCCmXE&callback=initMap&v=weekly&channel=2" async defer></script>
 </body>
