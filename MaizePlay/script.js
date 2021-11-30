@@ -1,10 +1,28 @@
 var resultView = new Vue({
   el: '#app',
   data: {
-    num: 0,
+    renderKey:0,
+    games: [],// this is a list of OBJECTS. So game[0].date gives the date, for example.
+    difficulty:0,
+    sport:'',
   },
   methods: {
 
+    // initializes Vue variables based on the javascript variables below
+    // can't initialize difficulty this way for some reason, so doing that manually
+    updateGames() {
+      this.games = games;
+      console.log("HERE");
+      console.log(this.games[0].date);
+      this.sport = sport;
+      diffID = event.currentTarget.id;
+
+      if (diffID == "begin") this.difficulty = 1;
+      if (diffID == "amateur") this.difficulty = 2;
+      if (diffID == "pro") this.difficulty = 3;
+
+      console.log(this.sport, this.difficulty);
+    },
   }
 })
 
@@ -27,7 +45,8 @@ var id = 1;
 const db = firebase.firestore();
 const gamesList = $('.games_list');
 
-let gamesRef;
+let gamesRef;// this is the object that firebase give us
+let games = [];// this is a list of the game OBJECTS
 let unsubscribe;
 
 // Main JQuery Function
@@ -59,10 +78,13 @@ $(document).ready(function () {
   $('#generate_game').click(generateGameFunc);
 
   gamesRef.onSnapshot(querySnapshot => {
-    const games = querySnapshot.docs.map(doc => {
+    const gameData = querySnapshot.docs.map(doc => {
+      games.push(doc.data());
       console.log(doc.data());
     });
   });
+  console.log("asdklfjaskfdjs")
+  console.log(games)
 })
 // End Main Jquery
 
@@ -104,9 +126,9 @@ function generateGameFunc() { // used to post the game to the list
     totPlayers: max,
     level: level
   });
-  var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
-  $('.games_list').append(new_game_str);
-  id++;
+  // var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
+  // $('.games_list').append(new_game_str);
+  // id++;
   $('#map_container').show();
   $('.games_list').show();
   $('.create_game').show();

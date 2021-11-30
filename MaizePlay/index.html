@@ -78,13 +78,13 @@
       <div id="selected_sport"></div>
 
       <div id="difficulty_container">
-         <button id="begin" class="difficulty_button">
+         <button v-on:click="updateGames" id="begin" class="difficulty_button">
             Casual
          </button>
-         <button id="amateur" class="difficulty_button">
+         <button v-on:click="updateGames" id="amateur" class="difficulty_button">
             Intermediate
          </button>
-         <button id="pro" class="difficulty_button">
+         <button v-on:click="updateGames" id="pro" class="difficulty_button">
             Pro
          </button>
       </div>
@@ -92,8 +92,15 @@
       <!-- Map Page (with screenshot, not actual google maps) with sample games -->
       <div class="games_list">
          <button class="create_game">Create New Game</button>
-         <div>
-            <button class="game_button" id="#001">placeholder</button>
+         <div v-for="game in games">
+            <div v-show="game.sport==sport">
+               <div v-show="game.level==difficulty">
+                  <button class="game_button" id="#001">
+                     <div>{{game.date}}</div>
+                     <div>{{game.numPlayers}}/{{game.totPlayers}}</div>
+                  </button>
+               </div>
+            </div>
          </div>
       </div>
 
