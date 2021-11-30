@@ -152,19 +152,19 @@ function createGameFunc() { // used when the user wants to create their own game
 }
 
 function generateGameFunc() { // used to post the game to the list
-  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){
-    alert("Please fill out all required fields");
-    return;
-  } else if ($('#c_players').val() > $('#t_players').val()) {
-    alert("Please ensure the number of players joining is less than the total number of players");
-    return;
-  }
-  var max = $("#t_players").val();
-  var curr = $('#c_players').val();
+  var max = parseInt($("#t_players").val());
+  var curr = parseInt($('#c_players').val());
   var date = $('#game_date').val();
   var time = $('#appt').val();
   var loc = $('#location').val();
-  //TODO: ADD LOCATION ADD ID TAG
+  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){
+    alert("Please fill out all required fields");
+    return;
+  } else if (curr > max) {
+    console.log($('#c_players').val(), $('#t_players').val());
+    alert("Please ensure the number of players joining is less than the total number of players");
+    return;
+  }
   gamesRef.add({
     sport: sport,
     date: date,

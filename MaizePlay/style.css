@@ -31,7 +31,8 @@ html {
     flex-wrap: wrap;
     justify-content: space-evenly;
     position: relative;
-    top: 50px;
+    top: 100px;
+
 }
 
 .sport_button{
@@ -50,7 +51,7 @@ html {
     flex-wrap: wrap;
     justify-content: space-evenly;
     position: relative;
-    top: 100px;
+    top: 150px;
 }
 
 #submit{
@@ -135,6 +136,7 @@ html {
 .game_button{
     background-color: #FFCB05;
     color: #00274C;
+    width: 100%;
     padding: 20px;
     height: 100px;
     font-size: 15px;
@@ -157,7 +159,8 @@ html {
     width: 400px;
     font-size: 30px;
     left: 20px;
-    margin: 100px;
+    margin-left: 40%;
+    margin-top: 10%;
     justify-content: center;
     align-content: center;
 }
@@ -199,4 +202,8 @@ html {
     position: absolute;
     top: 30px;
     left: 210px;
+}
+
+#generate_game{
+    background-color: lime;
 }
