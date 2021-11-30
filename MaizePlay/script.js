@@ -59,7 +59,7 @@ var resultView = new Vue({
       }
       var newnumPlayers = parseInt(this.indGame.numPlayers)+1;
       db.collection("All_Games").doc(this.indGame.id).set({numPlayers: newnumPlayers}, {merge: true});
-      displayHome();
+      displayHome(); 
     },
   }
 })
@@ -163,6 +163,7 @@ function generateGameFunc() { // used to post the game to the list
   var curr = $('#c_players').val();
   var date = $('#game_date').val();
   var time = $('#appt').val();
+  var loc = $('#location').val();
   //TODO: ADD LOCATION ADD ID TAG
   gamesRef.add({
     sport: sport,
@@ -170,7 +171,8 @@ function generateGameFunc() { // used to post the game to the list
     time: time,
     numPlayers: curr,
     totPlayers: max,
-    level: level
+    level: level,
+    location: loc,
   });
 
   // var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
