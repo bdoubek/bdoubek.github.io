@@ -39,7 +39,5 @@ Tools Used:
 - Athletes trying to improve their game but want to play with their skill level
 
 
-
-
-### Created with :gift_heart: by dedicated engineers from University of Michigan - Ann Arbor as part of EECS 493.
-Brainchild of [Pedro](ppascott@umich.edu), [Nikhil](npunshi@umich.edu), [Ben](bdoubek@umich.edu), and [Munnawn](munnawng@umich.edu). 
+### Created with :gift_heart: at University of Michigan - Ann Arbor as part of EECS 493.
+Brainchild of [Pedro](mailto:ppascott@umich.edu), [Nikhil](mailto:npunshi@umich.edu), [Ben](mailto:bdoubek@umich.edu), and [Munnawn](mailto:munnawng@umich.edu). 
