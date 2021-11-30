@@ -176,9 +176,10 @@ html {
 #game_id{
     margin: 15px;
     background-color: #00274C;
-    font-color: #FFCB05;
+    color: #FFCB05;
     width: 300px;
     height: 100px;
+    text-align: center;
 }
 
 #join_game{
@@ -188,9 +189,9 @@ html {
     background-color: lime;
     color: black;
     font-weight: bold;
-    position: absolute;
+    position: relative;
     bottom: 0px;
-    right: 0px;
+    left: 0px;
 }
 
 #back_to_select{
