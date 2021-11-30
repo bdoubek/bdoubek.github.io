@@ -157,6 +157,9 @@ html {
     width: 400px;
     font-size: 30px;
     left: 20px;
+    margin: 100px;
+    justify-content: center;
+    align-content: center;
 }
 
 .ind_game_info{
