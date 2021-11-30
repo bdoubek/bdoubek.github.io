@@ -11,9 +11,21 @@ var resultView = new Vue({
     // initializes Vue variables based on the javascript variables below
     // can't initialize difficulty this way for some reason, so doing that manually
     updateGames() {
-      this.games = games;
+      this.renderKey++;
+      
+      // doing this as a quick fix to a bug where games were being duplicated
+      gamesRef.onSnapshot(querySnapshot => {
+      this.games = [];
+      const gameData = querySnapshot.docs.map(doc => {
+        if (!this.games.includes(doc.data())) {
+          this.games.push(doc.data());
+          console.log("fetching to games list")
+        }
+        // console.log(doc.data());
+       });
+      });
+
       console.log("HERE");
-      console.log(this.games[0].date);
       this.sport = sport;
       diffID = event.currentTarget.id;
 
@@ -22,6 +34,7 @@ var resultView = new Vue({
       if (diffID == "pro") this.difficulty = 3;
 
       console.log(this.sport, this.difficulty);
+      console.log(games)
     },
   }
 })
@@ -78,9 +91,13 @@ $(document).ready(function () {
   $('#generate_game').click(generateGameFunc);
 
   gamesRef.onSnapshot(querySnapshot => {
+    games = [];
     const gameData = querySnapshot.docs.map(doc => {
-      games.push(doc.data());
-      console.log(doc.data());
+      if (!games.includes(doc.data())) {
+        games.push(doc.data());
+        console.log("fetching games list")
+      }
+      // console.log(doc.data());
     });
   });
   console.log("asdklfjaskfdjs")
@@ -126,6 +143,7 @@ function generateGameFunc() { // used to post the game to the list
     totPlayers: max,
     level: level
   });
+
   // var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
   // $('.games_list').append(new_game_str);
   // id++;

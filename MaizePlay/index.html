@@ -94,7 +94,7 @@
          <button class="create_game">Create New Game</button>
          <div v-for="game in games">
             <div v-show="game.sport==sport">
-               <div v-show="game.level==difficulty">
+               <div v-bind:key=renderKey v-show="game.level==difficulty">
                   <button class="game_button" id="#001">
                      <div>{{game.date}}</div>
                      <div>{{game.numPlayers}}/{{game.totPlayers}}</div>
@@ -120,7 +120,7 @@
          <input type="number" id="t_players" min="2">
          <label>Players Joining: </label>
          <input type="number" id="c_players" min="1">
-         <button id="generate_game">Post Game</button>
+         <button v-on:click="updateGames" id="generate_game">Post Game</button>
       </div>
    </div>
 
