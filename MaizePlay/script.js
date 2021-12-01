@@ -8,16 +8,14 @@ var resultView = new Vue({
     indGame: '',// used to store individual game
   },
   methods: {
-
     // initializes Vue variables based on the javascript variables below
     // can't initialize difficulty this way for some reason, so doing that manually
     updateGames() {
       this.renderKey++;
-      
-      // doing this as a quick fix to a bug where games were being duplicated
+      //update games data everytime database is updated
       gamesRef.onSnapshot(querySnapshot => {
-      this.games = [];
-      const gameData = querySnapshot.docs.map(doc => {
+        this.games = [];
+        const gameData = querySnapshot.docs.map(doc => {
         if (!this.games.includes(doc.data())) {
           var temp = doc.data();
           temp['id'] = doc.id;
@@ -25,18 +23,14 @@ var resultView = new Vue({
         }
        });
       });
-
-      console.log("HERE");
+      //update data fields
       this.sport = sport;
       diffID = event.currentTarget.id;
-
       if (diffID == "begin") this.difficulty = 1;
       if (diffID == "amateur") this.difficulty = 2;
       if (diffID == "pro") this.difficulty = 3;
-
-      console.log(this.sport, this.difficulty);
-      console.log(games)
     },
+    //Show game information screen
     showGameInfo(game) {
       $('#difficulty_container').hide();
       $('#map_container').hide();
@@ -52,13 +46,18 @@ var resultView = new Vue({
       $('#ind_game_interface').show();
       $('#back_to_select').show();
     },
+    //Handle Joining game and update in database
+    //TODO: add something like sending a calendar invite
     joinFunc() {
+      //error check to make sure game isnt full
       if (this.indGame.numPlayers >= this.indGame.totPlayers) {
         alert("Game is already full, please try another");
         return;
       }
+      //update number of players
       var newnumPlayers = parseInt(this.indGame.numPlayers)+1;
       db.collection("All_Games").doc(this.indGame.id).set({numPlayers: newnumPlayers}, {merge: true});
+      //redisplay all games for selected sport and difficulty
       selectDifficulty(level);
     },
   }
@@ -75,13 +74,12 @@ function initMap() {
   // $('#map').show();
 }
 
-// Not sure if this applies to vue, so feel free to change all of this up
+//Some Global Variables
 var sport = 'N/A';
 var level = 'N/A';
 var id = 1;
 
 const db = firebase.firestore();
-
 const gamesList = $('.games_list');
 
 let gamesRef;// this is the object that firebase give us
@@ -117,20 +115,6 @@ $(document).ready(function () {
   $('#generate_game').click(generateGameFunc);
 
   $('#back_to_select').click(goBackFunc);
-
-  /*gamesRef.onSnapshot(querySnapshot => {
-    games = [];
-    const gameData = querySnapshot.docs.map(doc => {
-      if (!games.includes(doc.data())) {
-        var temp = doc.data();
-        temp['id'] = doc.id;
-        games.push(temp);
-      }
-    });
-    console.log(games);
-  });
-  console.log("asdklfjaskfdjs")
-  console.log(games)*/
 })
 // End Main Jquery
 
@@ -152,19 +136,22 @@ function createGameFunc() { // used when the user wants to create their own game
 }
 
 function generateGameFunc() { // used to post the game to the list
+  // calculate all values for new database entry
   var max = parseInt($("#t_players").val());
   var curr = parseInt($('#c_players').val());
   var date = $('#game_date').val();
   var time = $('#appt').val();
   var loc = $('#location').val();
-  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){
+  //error checking
+  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){ //Every field is filled
     alert("Please fill out all required fields");
     return;
-  } else if (curr > max) {
+  } else if (curr > max) { //current players less than or equal to max players
     console.log($('#c_players').val(), $('#t_players').val());
     alert("Please ensure the number of players joining is less than the total number of players");
     return;
   }
+  //push new item to database
   gamesRef.add({
     sport: sport,
     date: date,
@@ -174,10 +161,7 @@ function generateGameFunc() { // used to post the game to the list
     level: level,
     location: loc,
   });
-
-  // var new_game_str = "<button class=\"game_button\" id=" + id + ">#" + id + ": " + curr + "/" + max + "</button>"
-  // $('.games_list').append(new_game_str);
-  // id++;
+  //redisplay map screen
   $('#map_container').show();
   $('.games_list').show();
   $('.create_game').show();
@@ -185,7 +169,7 @@ function generateGameFunc() { // used to post the game to the list
   $('#back_to_select').hide();
 }
 
-function displayHome() {
+function displayHome() { //display landing page
   $('#difficulty_container').hide();
   $('#map_container').hide();
   $('.games_list').hide();
@@ -199,7 +183,7 @@ function displayHome() {
   $('#back_to_select').hide();
 }
 
-function selectSport(sport_choice) {
+function selectSport(sport_choice) { //Handles changing the highlight of the selected sport
   $('#football_button').css('border-color', '#FFCB05');
   $('#basketball_button').css('border-color', '#FFCB05');
   $('#soccer_button').css('border-color', '#FFCB05');
@@ -208,23 +192,24 @@ function selectSport(sport_choice) {
   sport = sport_choice;
 }
 
-function findGames() {
+function findGames() { //display select dificulty screen
+  //error check - ensure a sport is selected
   if (sport == 'N/A') {
       alert("Please select a sport before trying to find a game");
       return;
-    }
-    $('#button_container').hide();
-    $('.sport_options').hide();
-    $('#selected_sport').html("<img id=selected src=images/" + sport + ".jpg>");
-    $('#difficulty_container').show();
-    $('#Home').show();
-    $('#selected_sport').show();
-    $('#difficulty_container').show();
-    $('#ind_game_interface').hide();
-    $('#back_to_select').hide();
+  }
+  $('#button_container').hide();
+  $('.sport_options').hide();
+  $('#selected_sport').html("<img id=selected src=images/" + sport + ".jpg>");
+  $('#difficulty_container').show();
+  $('#Home').show();
+  $('#selected_sport').show();
+  $('#difficulty_container').show();
+  $('#ind_game_interface').hide();
+  $('#back_to_select').hide();
 }
 
-function goBackFunc() {
+function goBackFunc() { //display previous page
   $('#ind_game_interface').hide();
   $('#back_to_select').hide();
   $('#map_container').show();
