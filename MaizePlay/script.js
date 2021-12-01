@@ -59,7 +59,7 @@ var resultView = new Vue({
       }
       var newnumPlayers = parseInt(this.indGame.numPlayers)+1;
       db.collection("All_Games").doc(this.indGame.id).set({numPlayers: newnumPlayers}, {merge: true});
-      displayHome(); 
+      selectDifficulty(level);
     },
   }
 })
