@@ -113,6 +113,7 @@
       
 
       <!-- Interface for creating new game -->
+      <p id="loc_label">Please click on the map to select the location:</p>
       <div class="new_game_info" id="new_game_interface">
          <label>Game Date: </label>
          <input type="date" id="game_date" name="gamedate">
@@ -122,9 +123,7 @@
          <input type="number" id="t_players" min="2">
          <label>Players Joining: </label>
          <input type="number" id="c_players" min="1">
-         <label>Location: </label>
-         <input type="string" id="location" name="loc">
-         <br><br>
+         <br>
          <button v-on:click="updateGames" id="generate_game">Post Game</button>
       </div>
 
@@ -132,8 +131,7 @@
       <button id="back_to_select">Back</button>
       <div class="ind_game_info" id="ind_game_interface" v-if="indGame">
          <div id="game_id"> {{ indGame.sport }} </div>
-         <p><b>Location: </b> {{ indGame.location }} <br>
-            <b>Date: </b> {{ indGame.date }} <br>
+         <p><b>Date: </b> {{ indGame.date }} <br>
             <b>Time: </b> {{ indGame.time }} <br>
             <b>Spots Left: </b> {{ indGame.numPlayers }}/{{ indGame.totPlayers }} 
          </p>

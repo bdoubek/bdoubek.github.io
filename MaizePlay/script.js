@@ -14,14 +14,19 @@ var resultView = new Vue({
       this.renderKey++;
       //update games data everytime database is updated
       gamesRef.onSnapshot(querySnapshot => {
-        this.games = [];
         const gameData = querySnapshot.docs.map(doc => {
-        if (!this.games.includes(doc.data())) {
-          var temp = doc.data();
-          temp['id'] = doc.id;
-          this.games.push(temp);
-        }
-       });
+          if (!this.games.some(game => game["id"] == doc.id)) {
+            var temp = doc.data();
+            temp['id'] = doc.id;
+            this.games.push(temp);
+            const marker = new google.maps.Marker({
+              position: { lat: temp["lat"], lng: temp["lng"] },
+              map: null,
+              label: temp['id'],
+            })
+            locations[temp["sport"]].push({"lat": temp["lat"], "lng": temp["lng"], "mark": marker});
+          }
+        });
       });
       //update data fields
       this.sport = sport;
@@ -33,7 +38,6 @@ var resultView = new Vue({
     //Show game information screen
     showGameInfo(game) {
       $('#difficulty_container').hide();
-      $('#map_container').hide();
       $('.games_list').hide();
       $('.create_game').hide();
       //TODO add back button add join game button add info
@@ -45,6 +49,7 @@ var resultView = new Vue({
       this.gameDocId = game.id;
       $('#ind_game_interface').show();
       $('#back_to_select').show();
+      hideAllButOneMarker(this.gameDocId);
     },
     //Handle Joining game and update in database
     //TODO: add something like sending a calendar invite
@@ -59,6 +64,7 @@ var resultView = new Vue({
       db.collection("All_Games").doc(this.indGame.id).set({numPlayers: newnumPlayers}, {merge: true});
       //redisplay all games for selected sport and difficulty
       selectDifficulty(level);
+      $('#ind_game_interface').hide();
     },
   }
 })
@@ -71,20 +77,42 @@ function initMap() {
     zoom: 14,
     mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-  // $('#map').show();
+
+  google.maps.event.addListener(map, 'click', function (event) {
+    if (newGame && onlyOnce) {
+      const marker = new google.maps.Marker({
+          position: event.latLng,
+          map: map,
+      });
+      locations[sport].push({"lat": event.latLng.lat(), "lng": event.latLng.lng(), "mark": marker});
+      newGameLat = event.latLng.lat();
+      newGameLng = event.latLng.lng();
+      onlyOnce = false;
+    }
+  });
 }
 
 //Some Global Variables
 var sport = 'N/A';
 var level = 'N/A';
 var id = 1;
+var newGame = false;
+var onlyOnce = true;
 
 const db = firebase.firestore();
 const gamesList = $('.games_list');
 
 let gamesRef;// this is the object that firebase give us
 let games = [];// this is a list of the game OBJECTS
+let locations = {
+  basketball: [],
+  soccer: [],
+  football: [],
+  golf: [],
+}
 let unsubscribe;
+let newGameLat;
+let newGameLng;
 
 // Main JQuery Function
 $(document).ready(function () {
@@ -126,13 +154,16 @@ function selectDifficulty(difficulty) { // select difficulty
   $(".games_list").show();
   $('.create_game').show();
   level = difficulty;
+  hideAllMarkers();
+  showMarkers();
 }
 
 function createGameFunc() { // used when the user wants to create their own game
-  $('#map_container').hide();
   $('.games_list').hide();
   $('.create_game').hide();
   $('#new_game_interface').show();
+  $('#loc_label').show();
+  newGame = true;
 }
 
 function generateGameFunc() { // used to post the game to the list
@@ -141,7 +172,6 @@ function generateGameFunc() { // used to post the game to the list
   var curr = parseInt($('#c_players').val());
   var date = $('#game_date').val();
   var time = $('#appt').val();
-  var loc = $('#location').val();
   //error checking
   if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){ //Every field is filled
     alert("Please fill out all required fields");
@@ -159,7 +189,8 @@ function generateGameFunc() { // used to post the game to the list
     numPlayers: curr,
     totPlayers: max,
     level: level,
-    location: loc,
+    lat: newGameLat,
+    lng: newGameLng,
   });
   //redisplay map screen
   $('#map_container').show();
@@ -167,6 +198,9 @@ function generateGameFunc() { // used to post the game to the list
   $('.create_game').show();
   $('#new_game_interface').hide();
   $('#back_to_select').hide();
+  $('#loc_label').hide();
+  newGame = false;
+  onlyOnce = true;
 }
 
 function displayHome() { //display landing page
@@ -181,6 +215,9 @@ function displayHome() { //display landing page
   $('.sport_options').show();
   $('#ind_game_interface').hide();
   $('#back_to_select').hide();
+  $('#loc_label').hide();
+  newGame = false;
+  onlyOnce = true;
 }
 
 function selectSport(sport_choice) { //Handles changing the highlight of the selected sport
@@ -212,8 +249,32 @@ function findGames() { //display select dificulty screen
 function goBackFunc() { //display previous page
   $('#ind_game_interface').hide();
   $('#back_to_select').hide();
-  $('#map_container').show();
   $(".games_list").show();
   $('.create_game').show();
+  showMarkers();
+  newGame = false;
 }
 
+function hideAllMarkers() {
+  for (sport_op in locations) {
+    locations[sport_op].forEach(function (latlng, i) {
+      latlng["mark"].setMap(null);
+    });
+  }
+}
+
+function showMarkers() {
+  locations[sport].forEach(function (latlng, i) {
+    latlng["mark"].setMap(map);
+  });
+}
+
+function hideAllButOneMarker(id) {
+  for (sport_op in locations) {
+    locations[sport_op].forEach(function (latlng, i) {
+      if (latlng["mark"]["label"] != id){
+        latlng["mark"].setMap(null);
+      }
+    });
+  }
+}
