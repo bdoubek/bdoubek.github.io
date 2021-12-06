@@ -22,7 +22,7 @@ var resultView = new Vue({
             const marker = new google.maps.Marker({
               position: { lat: temp["lat"], lng: temp["lng"] },
               map: null,
-              label: temp['id'],
+              label: temp["label"],
             })
             locations[temp["sport"]].push({"lat": temp["lat"], "lng": temp["lng"], "mark": marker});
           }
@@ -49,7 +49,7 @@ var resultView = new Vue({
       this.gameDocId = game.id;
       $('#ind_game_interface').show();
       $('#back_to_select').show();
-      hideAllButOneMarker(this.gameDocId);
+      hideAllButOneMarker(this.indGame.label);
     },
     //Handle Joining game and update in database
     //TODO: add something like sending a calendar invite
@@ -80,9 +80,11 @@ function initMap() {
 
   google.maps.event.addListener(map, 'click', function (event) {
     if (newGame && onlyOnce) {
+      var label = sport.charAt(0) + String(level) + String(index);
       const marker = new google.maps.Marker({
           position: event.latLng,
           map: map,
+          label: label,
       });
       locations[sport].push({"lat": event.latLng.lat(), "lng": event.latLng.lng(), "mark": marker});
       newGameLat = event.latLng.lat();
@@ -98,6 +100,7 @@ var level = 'N/A';
 var id = 1;
 var newGame = false;
 var onlyOnce = true;
+var index = 0;
 
 const db = firebase.firestore();
 const gamesList = $('.games_list');
@@ -114,10 +117,12 @@ let unsubscribe;
 let newGameLat;
 let newGameLng;
 
+
 // Main JQuery Function
 $(document).ready(function () {
   // display landing page, hide everything else
   gamesRef = db.collection('All_Games');
+  deleteDocs();
   displayHome();
   // Home button
   $('#Home').click(displayHome);
@@ -172,12 +177,13 @@ function generateGameFunc() { // used to post the game to the list
   var curr = parseInt($('#c_players').val());
   var date = $('#game_date').val();
   var time = $('#appt').val();
+  var label = sport.charAt(0) + String(level) + String(index);
+  index += 1;
   //error checking
   if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){ //Every field is filled
     alert("Please fill out all required fields");
     return;
   } else if (curr > max) { //current players less than or equal to max players
-    console.log($('#c_players').val(), $('#t_players').val());
     alert("Please ensure the number of players joining is less than the total number of players");
     return;
   }
@@ -191,6 +197,7 @@ function generateGameFunc() { // used to post the game to the list
     level: level,
     lat: newGameLat,
     lng: newGameLng,
+    label: label,
   });
   //redisplay map screen
   $('#map_container').show();
@@ -264,9 +271,10 @@ function hideAllMarkers() {
 }
 
 function showMarkers() {
-  console.log(locations[sport].length)
   locations[sport].forEach(function (latlng, i) {
-    latlng["mark"].setMap(map);
+    if (latlng["mark"]["label"].charAt(1) == level){
+      latlng["mark"].setMap(map);
+    }
   });
 }
 
@@ -278,4 +286,16 @@ function hideAllButOneMarker(id) {
       }
     });
   }
+}
+
+function deleteDocs() {
+  let now = new Date();
+  gamesRef.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      let docDate = new Date(doc.data()["date"]);
+      if (docDate < now){
+        doc.ref.delete();
+      } 
+  });
+});
 }

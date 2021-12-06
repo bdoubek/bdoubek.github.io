@@ -41,6 +41,10 @@ html {
     border-color: #FFCB05;
 }
 
+.sport_button:hover {
+    background-color: #00274C;
+}
+
 .img{
     height: 300px;
     width: 300px;
@@ -160,9 +164,9 @@ html {
     width: 400px;
     font-size: 30px;
     top: 100px;
-    left: 650px;
+    left: 40%;
     position: absolute;
-    margin-left: 40%;
+    margin-left: 35%;
     margin-top: 10%;
     justify-content: center;
     align-content: center;

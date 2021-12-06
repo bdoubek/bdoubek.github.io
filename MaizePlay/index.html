@@ -98,8 +98,8 @@
             <div v-show="game.sport==sport">
                <div v-bind:key=renderKey v-show="game.level==difficulty">
                   <button class="game_button" id="#001" v-on:click="showGameInfo(game)">
+                     <div>#{{game.label}}</div>
                      <div>{{game.date}}</div>
-                     <div>{{game.numPlayers}}/{{game.totPlayers}}</div>
                   </button>
                </div>
             </div>
@@ -130,7 +130,7 @@
       <!-- Individual Game Page -->
       <button id="back_to_select">Back</button>
       <div class="ind_game_info" id="ind_game_interface" v-if="indGame">
-         <div id="game_id"> {{ indGame.sport }} </div>
+         <div id="game_id"> #{{ indGame.label }} </div>
          <p><b>Date: </b> {{ indGame.date }} <br>
             <b>Time: </b> {{ indGame.time }} <br>
             <b>Spots Left: </b> {{ indGame.numPlayers }}/{{ indGame.totPlayers }} 
