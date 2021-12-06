@@ -155,7 +155,7 @@ function selectDifficulty(difficulty) { // select difficulty
   $('.create_game').show();
   level = difficulty;
   hideAllMarkers();
-  showMarkers();
+  setTimeout(showMarkers(), 2000);
 }
 
 function createGameFunc() { // used when the user wants to create their own game
@@ -264,6 +264,7 @@ function hideAllMarkers() {
 }
 
 function showMarkers() {
+  console.log(locations[sport].length)
   locations[sport].forEach(function (latlng, i) {
     latlng["mark"].setMap(map);
   });
