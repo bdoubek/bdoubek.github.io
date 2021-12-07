@@ -138,6 +138,13 @@ html {
     left: 80%;
 }
 
+#games_list_title {
+    top: 200px;
+    color: #FFCB05;
+    font-size: 30px;
+    text-align: center;
+}
+
 .game_button{
     background-color: #FFCB05;
     color: #00274C;

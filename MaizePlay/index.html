@@ -63,10 +63,10 @@
             <img class="img" id="football" src="images/football.jpg">
          </button>
          <button v-on:click="updateGames"  id="soccer_button" class="sport_button">
-            <img class="img" id="soccer" src="images/soccer.jpg">
+            <img class="img" id="soccer" src="images/soccer.png">
          </button>
          <button v-on:click="updateGames"  id="golf_button" class="sport_button">
-            <img class="img" id="golf" src="images/golf.jpg">
+            <img class="img" id="golf" src="images/golf.png">
          </button>
       </div>
 
@@ -93,6 +93,7 @@
 
       <!-- Map Page (with screenshot, not actual google maps) with sample games -->
       <div class="games_list">
+         <div id="games_list_title"><b>Games</b></div>
          <button class="create_game">Create New Game</button>
          <div v-for="game in games">
             <div v-show="game.sport==sport">
@@ -113,7 +114,7 @@
       
 
       <!-- Interface for creating new game -->
-      <p id="loc_label">Please click on the map to select the location:</p>
+      <p id="loc_label"><b>Please click on the map to select the location:</b></p>
       <div class="new_game_info" id="new_game_interface">
          <label>Game Date: </label>
          <input type="date" id="game_date" name="gamedate">
