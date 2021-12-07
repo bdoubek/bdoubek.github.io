@@ -245,7 +245,12 @@ function findGames() { //display select dificulty screen
   }
   $('#button_container').hide();
   $('.sport_options').hide();
-  $('#selected_sport').html("<img id=selected src=images/" + sport + ".jpg>");
+  if (sport == "soccer" || sport == "golf") {
+    $('#selected_sport').html("<img id=selected src=images/" + sport + ".png>");
+  }
+  else {
+    $('#selected_sport').html("<img id=selected src=images/" + sport + ".jpg>");
+  }
   $('#difficulty_container').show();
   $('#Home').show();
   $('#selected_sport').show();
