@@ -78,7 +78,7 @@
 
       <!-- Difficulty Select Page -->
       <div id="selected_sport"></div>
-
+      <div id="instruction"><p>Select Your Desired Skill Level:</p></div>
       <div id="difficulty_container">
          <button v-on:click="updateGames" id="begin" class="difficulty_button">
             Casual
@@ -100,7 +100,8 @@
                <div v-bind:key=renderKey v-show="game.level==difficulty">
                   <button class="game_button" id="#001" v-on:click="showGameInfo(game)">
                      <div>#{{game.label}}</div>
-                     <div>{{game.date}}</div>
+                     <div>Date: {{game.date}}</div>
+                     <div>Players: {{game.numPlayers}}/{{game.totPlayers}}</div>
                   </button>
                </div>
             </div>
@@ -122,7 +123,7 @@
          <input type="time" id="appt" name="appt">
          <label>Max # Of Players: </label>
          <input type="number" id="t_players" min="2">
-         <label>Players Joining: </label>
+         <label>Confirmed # Of Players: </label>
          <input type="number" id="c_players" min="1">
          <br>
          <button v-on:click="updateGames" id="generate_game">Post Game</button>
@@ -134,7 +135,7 @@
          <div id="game_id"> #{{ indGame.label }} </div>
          <p><b>Date: </b> {{ indGame.date }} <br>
             <b>Time: </b> {{ indGame.time }} <br>
-            <b>Spots Left: </b> {{ indGame.numPlayers }}/{{ indGame.totPlayers }} 
+            <b>Player Count: </b> {{ indGame.numPlayers }}/{{ indGame.totPlayers }} 
          </p>
          <button id="join_game" v-on:click="joinFunc">Join Game</button>
       </div>
