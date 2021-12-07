@@ -233,7 +233,7 @@ function selectSport(sport_choice) { //Handles changing the highlight of the sel
   $('#basketball_button').css('border-color', '#FFCB05');
   $('#soccer_button').css('border-color', '#FFCB05');
   $('#golf_button').css('border-color', '#FFCB05');
-  $('#'+sport_choice+'_button').css('border-color', 'blue');
+  $('#'+sport_choice+'_button').css('border-color', '#00274C');
   sport = sport_choice;
 }
 
