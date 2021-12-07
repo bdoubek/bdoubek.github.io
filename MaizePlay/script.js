@@ -38,6 +38,7 @@ var resultView = new Vue({
     //Show game information screen
     showGameInfo(game) {
       $('#difficulty_container').hide();
+      $('#instruction').hide();
       $('.games_list').hide();
       $('.create_game').hide();
       //TODO add back button add join game button add info
@@ -154,6 +155,7 @@ $(document).ready(function () {
 
 // Button functions
 function selectDifficulty(difficulty) { // select difficulty
+  $('#instruction').hide();
   $('#selected_sport').hide();
   $('#difficulty_container').hide();
   $('#map_container').show();
@@ -181,7 +183,7 @@ function generateGameFunc() { // used to post the game to the list
   var label = sport.charAt(0) + String(level) + String(index);
   index += 1;
   //error checking
-  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val()){ //Every field is filled
+  if (!$('#game_date').val() || !$('#appt').val() || !$('#c_players').val() || !$('#t_players').val() || onlyOnce){ //Every field is filled
     alert("Please fill out all required fields");
     return;
   } else if (curr > max) { //current players less than or equal to max players
@@ -212,6 +214,7 @@ function generateGameFunc() { // used to post the game to the list
 }
 
 function displayHome() { //display landing page
+  $('#instruction').hide();
   $('#difficulty_container').hide();
   $('#map_container').hide();
   $('.games_list').hide();
@@ -257,6 +260,7 @@ function findGames() { //display select dificulty screen
   $('#difficulty_container').show();
   $('#ind_game_interface').hide();
   $('#back_to_select').hide();
+  $('#instruction').show();
 }
 
 function goBackFunc() { //display previous page
