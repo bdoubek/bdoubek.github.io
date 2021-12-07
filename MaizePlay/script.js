@@ -61,6 +61,7 @@ var resultView = new Vue({
       }
       //update number of players
       var newnumPlayers = parseInt(this.indGame.numPlayers)+1;
+      this.indGame.numPlayers += 1;
       db.collection("All_Games").doc(this.indGame.id).set({numPlayers: newnumPlayers}, {merge: true});
       //redisplay all games for selected sport and difficulty
       selectDifficulty(level);
