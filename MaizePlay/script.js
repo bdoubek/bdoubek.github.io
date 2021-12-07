@@ -67,6 +67,7 @@ var resultView = new Vue({
       //redisplay all games for selected sport and difficulty
       selectDifficulty(level);
       $('#ind_game_interface').hide();
+      alert("Game Joined Successfully!");
     },
   }
 })
